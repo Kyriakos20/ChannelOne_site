@@ -1,0 +1,86 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="panel panel-warning" ng-hide="cntrl.yorkBranch">
+                <div class="panel-heading">
+                    Today's Call Totals
+                </div>
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>LO</th> <th>Rcvd</th> <th>Made</th><th>Contacts</th> <th>Minutes</th> <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="call in cntrl.callTotals">
+                        <td>
+                            {{call._id.name.last}}, {{call._id.name.first}}
+                        </td>
+                        <td>
+                            {{call.inbound}}
+                        </td>
+                        <td>
+                            {{call.outbound}}
+                        </td>
+                        <td>
+                            {{call.outConvo}}
+                        </td>
+                        <td>
+                            {{call.callTime | toMinutes}}
+                        </td>
+                        <td>
+                            {{call.total}}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        <div class="col-sm-4">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    Pipeline Distribution
+                </div>
+                <div class="panel-body">
+                    <canvas id="lead-dist-chart" width="250" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-sm-4">
+            <div class="panel panel-warning" ng-hide="cntrl.yorkBranch">
+                <div class="panel-heading">
+                    Missed Calls
+                </div>
+                <table class="table table-condensed table-striped table-responsive">
+                    <thead>
+                    <tr>
+                        <th>Time</th> <th>Name</th> <th>Number</th> <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="missed in cntrl.missedCalls">
+                        <td>
+                            {{missed.startTime | formatDateTime}}
+                        </td>
+                        <td>
+                            {{missed.clientName}}
+                        </td>
+                        <td>
+                            {{missed.clientNumber}}
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-danger" ng-click="cntrl.deleteMissedCall(missed, $index)"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

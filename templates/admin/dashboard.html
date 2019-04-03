@@ -1,0 +1,136 @@
+
+   <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        Today's Call Totals
+                    </div>
+                    <table class="table table-condensed table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>LO</th> <th>Rcvd</th> <th>Made</th><th>Contacts</th> <th>Minutes</th> <th>Total</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="call in cntrl.callTotals">
+                            <td>
+                                {{call._id.name.last}}, {{call._id.name.first}}
+                            </td>
+                            <td>
+                                {{call.inbound}}
+                            </td>
+                            <td>
+                                {{call.outbound}}
+                            </td>
+                            <td>
+                                {{call.outConvo}}
+                            </td>
+                            <td>
+                                {{call.callTime | toMinutes}}
+                            </td>
+                            <td>
+                                {{call.total}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        Today's Call Center Users
+                    </div>
+                    <table class="table table-condensed table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>LO</th> <th>Time</th> <th>Updated</th> <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="center in cntrl.centerTotals">
+                            <td>
+                                {{center._id.name.last}}, {{center._id.name.first}}
+                            </td>
+                            <td>
+                                {{center.lastTotalTime}}
+                            </td>
+                            <td>
+                                {{center.lastTime | formatDateTime}}
+                            </td>
+                            <td>
+                                <i class="fa fa-thumbs-o-up text-success" ng-show="center.lastState == 'Available'"></i>
+                                <i class="fa fa-thumbs-o-up text-danger" ng-show="center.lastState != 'Available'"></i>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        Pipeline Distribution
+                    </div>
+                    <div class="panel-body">
+                        <canvas id="lead-dist-chart" width="250" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+       <div class="row">
+           <div class="col-sm-6">
+               <div class="panel panel-danger">
+                    <div class="panel-heading">
+                       Longest Sitting Leads
+                    </div>
+                    <table class="table table-condensed table-striped table-responsive">
+                        <thead>
+                        <tr>
+                            <th>Owner</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Age(Days)</th>
+                            <th>LO</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="dog in cntrl.dogHouse">
+                            <td>
+                                {{dog.owner.primary.name.last}}, {{dog.owner.primary.name.first}}
+                            </td>
+                            <td>
+                                {{dog.address.street1}}, {{dog.address.state}}
+                            </td>
+                            <td>
+                                {{dog.lastStatusName}}
+                            </td>
+                            <td>
+                                {{dog.days | number:0}}
+                            </td>
+                            <td>
+                                {{dog.lastStatusUserName}}
+                            </td>
+                            <td class="text-center">
+                                <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(dog)"><i class="fa fa-eye"></i></button>
+                                <button class="btn btn-xs btn-info btn-warning" ng-click="cntrl.recycle(dog)"><i class="fa fa-recycle"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+               </div>
+           </div>
+       </div>
+
+
+
+    </div>

@@ -1,0 +1,88 @@
+
+   <div class="container-fluid">
+       <h1 class="page-title">Admin Users</h1>
+       <div class="row">
+           <div class="col-sm-6">
+               <div class="panel">
+                   <div class="panel-body">
+                       <h3 class="paper-title">All Users <button class="btn btn-primary btn-sm" ng-click="cntrl.editingUser = {}"><i class="fa fa-plus"></i></button></h3>
+                       <br />
+                       <table class="table table-bordered table-condensed table-responsive table-striped">
+                           <thead>
+                           <tr>
+                               <th>First</th>
+                               <th>Last</th>
+                               <th>Email</th>
+                               <th>Phone</th>
+                               <th class="text-center">
+                                   <button class="btn btn-xs btn-info" disabled><i class="fa fa-eye"></i></button>
+                               </th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           <tr ng-repeat="user in cntrl.users">
+                               <td>
+                                   {{user.name.first}}
+                               </td>
+                               <td>
+                                   {{user.name.last}}
+                               </td>
+                               <td>
+                                   {{user.email}}
+                               </td>
+                               <td>{{user.phones.desk}}</td>
+                               <td class="text-center">
+                                   <button class="btn btn-info btn-xs" ng-click="cntrl.editUser(user, $index)"><i class="fa fa-eye"></i></button>
+                               </td>
+                           </tr>
+                           </tbody>
+                       </table>
+                   </div>
+               </div>
+           </div>
+
+           <div class="col-sm-6" ng-show="cntrl.editingUser">
+               <div class="panel">
+                   <div class="panel-body">
+                       <h3 class="paper-title">
+                           <span ng-show="cntrl.editingUser._id">
+                               Edit {{cntrl.editingUser.name.first}} {{cntrl.editingUser.name.last}}
+                           </span>
+                           <span ng-show="!cntrl.editingUser._id">
+                               Create New User
+                           </span>
+                       </h3>
+                       <br />
+                       <form ng-submit="cntrl.saveUser()">
+                           <div class="form-group">
+                               <label>First Name</label>
+                               <input type="text" class="form-control" ng-model="cntrl.editingUser.name.first">
+                           </div>
+                           <div class="form-group">
+                               <label>Last Name</label>
+                               <input type="text" class="form-control" ng-model="cntrl.editingUser.name.last">
+                           </div>
+                           <div class="form-group">
+                               <label>Email</label>
+                               <input type="text" class="form-control" ng-model="cntrl.editingUser.email">
+                           </div>
+                           <div class="form-group">
+                               <label>Desk Phone</label>
+                               <input type="text" class="form-control" ng-model="cntrl.editingUser.phones.desk">
+                           </div>
+                           <div class="form-group">
+                               <label>Password</label>
+                               <input type="password" class="form-control" ng-model="cntrl.editingUser.password">
+                           </div>
+                           <div class="form-group">
+                               <label>Role</label>
+                               <select class="form-control" ng-model="cntrl.editingUser.role" ng-options="role for role in cntrl.roles"></select>
+                           </div>
+                           <button class="btn btn-warning" type="button" ng-click="cntrl.editingUser = null">Cancel</button>
+                           <button class="btn btn-success" type="submit">Save</button>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>

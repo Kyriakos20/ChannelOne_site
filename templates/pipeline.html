@@ -1,0 +1,561 @@
+
+
+   <div class="container-fluid">
+       <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-title pull-left">Pipeline</h1>
+            <div class="nav nav-pills pull-right" id="pipe-shortcuts">
+                <li><button class="btn btn-sm btn-info" ng-click="slideTo('completed')">Completed Apps</button></li>
+                <li><button class="btn btn-sm btn-info" ng-click="slideTo('working')">Working</button></li>
+                <li><button class="btn btn-sm btn-info" ng-click="slideTo('processing')">Processing</button></li>
+                <li><button class="btn btn-sm btn-info" ng-click="slideTo('closed')">Closed</button></li>
+            </div>
+            <div class="pull-right" style="margin-right:20px;">
+                <input type="text" class="form-control" ng-model="searchTerm" placeholder="Search">
+            </div>
+        </div>
+       </div>
+       <h3 id="completed" class="text-primary">Completed Apps
+           <button class="btn btn-xs btn-info pipe-show">
+               <i class="fa fa-minus hider"></i>
+               <i class="fa fa-plus shower"></i>
+           </button>
+       </h3>
+       <div class="panel">
+           <table class="table table-bordered table-condensed table-responsive small-txt-table">
+               <thead>
+               <tr>
+                   <th ng-class="{'active':cntrl.sortField == 'isFirstTime'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('isFirstTime')">Type</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'owner.primary.name.last'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('owner.primary.name.last')">Owner</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.street1'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.street1')">Street</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.city'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.city')">City</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.state'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.state')">State</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.county'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.county')">County</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='address.zip'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.zip')">Zip</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.amount'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.amount')">Mtg</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.rateType'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.rateType')">F/A</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.date'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.date')">Closed</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.previousValue'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.previousValue')">Prev</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgageValue.value'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgageValue.value')">Estimate</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquity'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquity')">Equity</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquityPercent'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquityPercent')">%</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='status'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('status')">Status</button>
+                   </th>
+                   <th>
+                       Phone
+                   </th>
+                   <th>
+                       Last Comment
+                   </th>
+                   <th>
+                       <button disabled class="btn btn-xs btn-info"><i class="fa fa-eye"></i></button>
+                   </th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="lead in cntrl.leads | orderBy:cntrl.sortDir+cntrl.sortField |filter:getBucket('Completed Apps') | filter:searchTerm" ng-class="bestColor(lead)">
+                   <td>
+                       <small ng-show="lead.isFirstTime" class="label label-success">1st Time</small>
+                       <small ng-show="!lead.isFirstTime" class="label label-info">HECM/HECM</small>
+                   </td>
+                   <td>
+                       {{lead.owner.primary.name.last}}, {{lead.owner.primary.name.first}}
+                   </td>
+                   <td>
+                       {{lead.address.street1}}
+                   </td>
+                   <td>
+                       {{lead.address.city}}
+                   </td>
+                   <td>
+                       {{lead.address.state}}
+                   </td>
+                   <td>
+                       {{lead.address.county}}
+                   </td>
+                   <td>
+                       {{lead.address.zip}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.amount | number:0}}
+                   </td>
+                   <td class="text-center">
+                       <span class="label label-primary" ng-if="lead.mortgage.rateType == 'Fixed'">F</span>
+                       <span class="label label-info" ng-if="lead.mortgage.rateType == 'Adjustable'">A</span>
+                   </td>
+                   <td>
+                       {{lead.mortgage.date | formatDate}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.previousValue | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgageValue.value | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquity | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquityPercent | number:0}}
+                   </td>
+                   <td>
+                       {{lead.status}}<br /><small>{{lead.statuses[lead.statuses.length -1].date | formatDateTime}}</small>
+                   </td>
+                   <td>
+                        <a ng-click="cntrl.showDialModal(lead)" ng-repeat="phone in lead.phones | filter:preferWhitePages | orderBy:['-status','-updated', '-createdAt']| limitTo:1">
+                                {{phone.number}}
+                            </a>
+                   </td>
+                   <td>
+                       <div style="max-width: 150px;overflow:hidden" ng-repeat="comment in lead.comments | filter:usersComments() | orderBy:'-date'  | limitTo:1">
+                           {{comment.body}}
+                       </div>
+                   </td>
+                   <td class="text-center">
+                       <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(lead)"><i class="fa fa-eye"></i></button>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+       </div>
+
+
+
+       <h3 id="working" class="text-primary">Working
+           <button class="btn btn-xs btn-info pipe-show">
+               <i class="fa fa-minus hider"></i>
+               <i class="fa fa-plus shower"></i>
+           </button>
+       </h3>
+       <div class="panel">
+           <table class="table table-bordered table-condensed table-responsive small-txt-table">
+               <thead>
+               <tr>
+                   <th ng-class="{'active':cntrl.sortField == 'isFirstTime'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('isFirstTime')">Type</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'owner.primary.name.last'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('owner.primary.name.last')">Owner</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.street1'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.street1')">Street</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.city'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.city')">City</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.state'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.state')">State</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.county'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.county')">County</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='address.zip'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.zip')">Zip</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.amount'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.amount')">Mtg</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.rateType'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.rateType')">F/A</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.date'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.date')">Closed</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.previousValue'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.previousValue')">Prev</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgageValue.value'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgageValue.value')">Estimate</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquity'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquity')">Equity</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquityPercent'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquityPercent')">%</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='status'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('status')">Status</button>
+                   </th>
+                   <th>
+                       Phone
+                   </th>
+                   <th>
+                       Last Comment
+                   </th>
+                   <th>
+                       <button disabled class="btn btn-xs btn-info"><i class="fa fa-eye"></i></button>
+                   </th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="lead in cntrl.leads | orderBy:cntrl.sortDir+cntrl.sortField |filter:getBucket('Working') | filter:searchTerm" ng-class="bestColor(lead)">
+                   <td>
+                       <small ng-show="lead.isFirstTime" class="label label-success">1st Time</small>
+                       <small ng-show="!lead.isFirstTime" class="label label-info">HECM/HECM</small>
+                   </td>
+                   <td>
+                       {{lead.owner.primary.name.last}}, {{lead.owner.primary.name.first}}
+                   </td>
+                   <td>
+                       {{lead.address.street1}}
+                   </td>
+                   <td>
+                       {{lead.address.city}}
+                   </td>
+                   <td>
+                       {{lead.address.state}}
+                   </td>
+                   <td>
+                       {{lead.address.county}}
+                   </td>
+                   <td>
+                       {{lead.address.zip}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.amount | number:0}}
+                   </td>
+                   <td class="text-center">
+                       <span class="label label-primary" ng-if="lead.mortgage.rateType == 'Fixed'">F</span>
+                       <span class="label label-info" ng-if="lead.mortgage.rateType == 'Adjustable'">A</span>
+                   </td>
+                   <td>
+                       {{lead.mortgage.date | formatDate}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.previousValue | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgageValue.value | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquity | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquityPercent | number:0}}
+                   </td>
+                   <td>
+                       {{lead.status}}<br /><small>{{lead.statuses[lead.statuses.length -1].date | formatDateTime}}</small>
+                   </td>
+                   <td>
+                        <a ng-click="cntrl.showDialModal(lead)" ng-repeat="phone in lead.phones | filter:preferWhitePages | orderBy:['-status','-updated', '-createdAt']| limitTo:1">
+                                {{phone.number}}
+                            </a>
+                   </td>
+                   <td>
+                       <div style="max-width: 150px;overflow:hidden" ng-repeat="comment in lead.comments | filter:usersComments() | orderBy:'-date'  | limitTo:1">
+                           {{comment.body}}
+                       </div>
+                   </td>
+                   <td class="text-center">
+                       <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(lead)"><i class="fa fa-eye"></i></button>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+
+       </div>
+
+
+
+       <h3 id="processing" class="text-primary">Processing
+           <button class="btn btn-xs btn-info pipe-show">
+               <i class="fa fa-minus hider"></i>
+               <i class="fa fa-plus shower"></i>
+           </button>
+       </h3>
+       <div class="panel">
+           <table class="table table-bordered table-condensed table-responsive small-txt-table">
+               <thead>
+               <tr>
+                   <th ng-class="{'active':cntrl.sortField == 'isFirstTime'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('isFirstTime')">Type</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'owner.primary.name.last'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('owner.primary.name.last')">Owner</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.street1'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.street1')">Street</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.city'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.city')">City</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.state'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.state')">State</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.county'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.county')">County</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='address.zip'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.zip')">Zip</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.amount'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.amount')">Mtg</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.rateType'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.rateType')">F/A</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.date'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.date')">Closed</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.previousValue'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.previousValue')">Prev</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgageValue.value'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgageValue.value')">Estimate</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquity'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquity')">Equity</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquityPercent'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquityPercent')">%</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='status'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('status')">Status</button>
+                   </th>
+                   <th>
+                       Phone
+                   </th>
+                   <th>
+                       Last Comment
+                   </th>
+                   <th>
+                       <button disabled class="btn btn-xs btn-info"><i class="fa fa-eye"></i></button>
+                   </th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="lead in cntrl.leads | orderBy:cntrl.sortDir+cntrl.sortField |filter:getBucket('Processing') | filter:searchTerm" ng-class="bestColor(lead)">
+                   <td>
+                       <small ng-show="lead.isFirstTime" class="label label-success">1st Time</small>
+                       <small ng-show="!lead.isFirstTime" class="label label-info">HECM/HECM</small>
+                   </td>
+                   <td>
+                       {{lead.owner.primary.name.last}}, {{lead.owner.primary.name.first}}
+                   </td>
+                   <td>
+                       {{lead.address.street1}}
+                   </td>
+                   <td>
+                       {{lead.address.city}}
+                   </td>
+                   <td>
+                       {{lead.address.state}}
+                   </td>
+                   <td>
+                       {{lead.address.county}}
+                   </td>
+                   <td>
+                       {{lead.address.zip}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.amount | number:0}}
+                   </td>
+                   <td class="text-center">
+                       <span class="label label-primary" ng-if="lead.mortgage.rateType == 'Fixed'">F</span>
+                       <span class="label label-info" ng-if="lead.mortgage.rateType == 'Adjustable'">A</span>
+                   </td>
+                   <td>
+                       {{lead.mortgage.date | formatDate}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.previousValue | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgageValue.value | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquity | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquityPercent | number:0}}
+                   </td>
+                   <td>
+                       {{lead.status}}<br /><small>{{lead.statuses[lead.statuses.length -1].date | formatDateTime}}</small>
+                   </td>
+                   <td>
+                        <a ng-click="cntrl.showDialModal(lead)" ng-repeat="phone in lead.phones | orderBy:['-status','-updated', preferWhitePages, '-createdAt']| limitTo:1">
+                                {{phone.number}}
+                            </a>
+                   </td>
+                   <td>
+                       <div style="max-width: 150px;overflow:hidden" ng-repeat="comment in lead.comments | filter:usersComments() |orderBy:'-date' | limitTo:1">
+                           {{comment.body}}
+                       </div>
+                   </td>
+                   <td class="text-center">
+                       <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(lead)"><i class="fa fa-eye"></i></button>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+
+       </div>
+
+
+
+       <h3 id="closed" class="text-primary">Closed
+           <button class="btn btn-xs btn-info pipe-show">
+               <i class="fa fa-minus hider"></i>
+               <i class="fa fa-plus shower"></i>
+           </button>
+       </h3>
+       <div class="panel">
+           <table class="table table-bordered table-condensed table-responsive small-txt-table">
+               <thead>
+               <tr>
+                   <th ng-class="{'active':cntrl.sortField == 'isFirstTime'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('isFirstTime')">Type</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'owner.primary.name.last'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('owner.primary.name.last')">Owner</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.street1'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.street1')">Street</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.city'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.city')">City</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.state'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.state')">State</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField == 'address.county'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.county')">County</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='address.zip'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('address.zip')">Zip</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.amount'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.amount')">Mtg</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.rateType'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.rateType')">F/A</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.date'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.date')">Closed</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgage.previousValue'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgage.previousValue')">Prev</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='mortgageValue.value'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('mortgageValue.value')">Estimate</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquity'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquity')">Equity</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='currentEquityPercent'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('currentEquityPercent')">%</button>
+                   </th>
+                   <th ng-class="{'active':cntrl.sortField =='status'}">
+                       <button class="sort-btn" ng-click="cntrl.sortOn('status')">Status</button>
+                   </th>
+                   <th>
+                       Phone
+                   </th>
+                   <th>
+                       Last Comment
+                   </th>
+                   <th>
+                       <button disabled class="btn btn-xs btn-info"><i class="fa fa-eye"></i></button>
+                   </th>
+               </tr>
+               </thead>
+               <tbody>
+               <tr ng-repeat="lead in cntrl.leads | orderBy:cntrl.sortDir+cntrl.sortField |filter:getBucket('Closed') | filter:searchTerm" ng-class="bestColor(lead)">
+                   <td>
+                       <small ng-show="lead.isFirstTime" class="label label-success">1st Time</small>
+                       <small ng-show="!lead.isFirstTime" class="label label-info">HECM/HECM</small>
+                   </td>
+                   <td>
+                       {{lead.owner.primary.name.last}}, {{lead.owner.primary.name.first}}
+                   </td>
+                   <td>
+                       {{lead.address.street1}}
+                   </td>
+                   <td>
+                       {{lead.address.city}}
+                   </td>
+                   <td>
+                       {{lead.address.state}}
+                   </td>
+                   <td>
+                       {{lead.address.county}}
+                   </td>
+                   <td>
+                       {{lead.address.zip}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.amount | number:0}}
+                   </td>
+                   <td class="text-center">
+                       <span class="label label-primary" ng-if="lead.mortgage.rateType == 'Fixed'">F</span>
+                       <span class="label label-info" ng-if="lead.mortgage.rateType == 'Adjustable'">A</span>
+                   </td>
+                   <td>
+                       {{lead.mortgage.date | formatDate}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgage.previousValue | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.mortgageValue.value | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquity | number:0}}
+                   </td>
+                   <td class="text-right">
+                       {{lead.currentEquityPercent | number:0}}
+                   </td>
+                   <td>
+                       {{lead.status}}<br /><small>{{lead.statuses[lead.statuses.length -1].date | formatDateTime}}</small>
+                   </td>
+                   <td>
+                        <a ng-click="cntrl.showDialModal(lead)" ng-repeat="phone in lead.phones | filter:preferWhitePages | orderBy:['-status','-updated', '-createdAt']| limitTo:1">
+                                {{phone.number}}
+                        </a>
+                   </td>
+                   <td>
+                       <div style="max-width: 150px;overflow:hidden" ng-repeat="comment in lead.comments | filter:usersComments() |orderBy:'-date' | limitTo:1">
+                           {{comment.body}}
+                       </div>
+                   </td>
+                   <td class="text-center">
+                       <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(lead)"><i class="fa fa-eye"></i></button>
+                   </td>
+               </tr>
+               </tbody>
+           </table>
+           
+       </div>
+
+
+   </div>
+

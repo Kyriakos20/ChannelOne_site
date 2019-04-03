@@ -1,0 +1,597 @@
+<div class="container-fluid">
+       <h1 class="page-title">Leads <button class="btn btn-primary" ng-click="cntrl.showEditPropModal()"><i class="fa fa-plus"></i></h1>
+       <div class="row" ng-show="showFilters">
+           <div class="col-lg-12">
+               <div class="well-sm well">
+                   <div class="row">
+                       <div class="col-lg-12">
+                           <h3 class="paper-title">Filters</h3>
+                       </div>
+                   </div>
+                   <div class="row">
+
+                       <div class="col-sm-3 col-md-2">
+                            <div class="list-group" id="filter-list-group">
+                                <button class="list-group-item" data-target="filter_oldId">
+                                    <i class="fa fa-plus-circle"></i> Lead ID
+                                </button>
+                                <button class="list-group-item" data-target="filter_last_name">
+                                    <i class="fa fa-plus-circle"></i> Last Name
+                                </button>
+                                <button class="list-group-item" data-target="filter_first_name">
+                                    <i class="fa fa-plus-circle"></i> First Name
+                                </button>
+                                <button class="list-group-item" data-target="filter_street">
+                                    <i class="fa fa-plus-circle"></i> Street
+                                </button>
+                                <button class="list-group-item" data-target="filter_city">
+                                    <i class="fa fa-plus-circle"></i> City
+                                </button>
+                                <button class="list-group-item" data-target="filter_state">
+                                    <i class="fa fa-plus-circle"></i> State/County
+                                </button>
+                                <button class="list-group-item" data-target="filter_zip">
+                                    <i class="fa fa-plus-circle"></i> Zip Code
+                                </button>
+                                <button class="list-group-item" data-target="filter_phone">
+                                    <i class="fa fa-plus-circle"></i> Phone
+                                </button>
+                                <button class="list-group-item" data-target="filter_loan_type">
+                                    <i class="fa fa-plus-circle"></i> Loan Type
+                                </button>
+                                <button class="list-group-item" data-target="filter_mtg_amount">
+                                    <i class="fa fa-plus-circle"></i> Mortgage Amount
+                                </button>
+                                <button class="list-group-item" data-target="filter_closing_date">
+                                    <i class="fa fa-plus-circle"></i> Closing Date
+                                </button>
+                                <button class="list-group-item" data-target="filter_previous_value">
+                                    <i class="fa fa-plus-circle"></i> Previous Value
+                                </button>
+                                <button class="list-group-item" data-target="filter_zestimate">
+                                    <i class="fa fa-plus-circle"></i> Zestimate
+                                </button>
+                                <button class="list-group-item" data-target="filter_equity">
+                                    <i class="fa fa-plus-circle"></i> Equity Amount
+                                </button>
+                                <button class="list-group-item" data-target="filter_equity_percent">
+                                    <i class="fa fa-plus-circle"></i> Equity Percent
+                                </button>
+                            </div>
+                       </div>
+                       <div class="col-sm-9 col-md-10">
+                           <div class="panel filter-panel" id="filter_oldId">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="oldId"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Lead ID</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                               <input type="text" class="form-control" ng-model="cntrl.filters.oldId" placeholder="Enter ID">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_last_name">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="lastName"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Last Name</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <input type="text" class="form-control" ng-model="cntrl.filters.lastName" placeholder="Enter Last Name">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_first_name">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="firstName"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">First Name</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <input type="text" class="form-control" ng-model="cntrl.filters.firstName" placeholder="Enter First Name">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_street">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="street"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Street</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <input type="text" class="form-control" ng-model="cntrl.filters.street" placeholder="Enter Street Number and/or Name">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_city">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="city"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">City</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <input type="text" class="form-control" ng-model="cntrl.filters.city" placeholder="Enter City">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_state">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="states"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">State/County</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <label ng-repeat="state in cntrl.states" class="state-filter-box">
+                                               <input type="checkbox" checklist-model="cntrl.filters.states" checklist-value="state" checklist-change="cntrl.changeFilterState(state)"> {{state}}
+                                           </label>
+                                           <div class="well well-sm" ng-repeat="state in cntrl.states" ng-show="(cntrl.filters.states.indexOf(state) >= 0)">
+                                               <div class="row">
+                                                   <div class="col-xs-2">
+                                                       <h4 class="text-center text-primary"><button class="btn btn-info btn-sm county-toggle">{{state}}</button></h4>
+                                                       <div class="text-center">
+                                                           Select All<br/>
+                                                           <input type="checkbox" class="county-all" data-state="{{state}}" value="{{state}}" name="{{state}}-all">
+                                                       </div>
+                                                   </div>
+                                                   <div class="col-xs-10 county-selector-note">
+                                                       <p class="text-muted">click to show/hide counties</p>
+                                                   </div>
+                                                   <div class="col-xs-10 county-selector">
+                                                        <div class="state-county-list" ng-attr-id="{{state + '-county-list'}}">
+                                                            <label class="county-filter-box" ng-repeat="county in cntrl.counties[state] | orderBy:'county'">
+                                                                <input class="countyBox" type="checkbox" checklist-model="cntrl.filters.counties[state]" checklist-value="county">
+                                                                {{county | countyTxt}}
+                                                            </label>
+                                                        </div>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_zip">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="zip"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Zip Code</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <input type="text" class="form-control" ng-model="cntrl.filters.zip" placeholder="Enter Zip Code">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="panel filter-panel" id="filter_phone">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="phone"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Phone</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <input type="text" class="form-control" ng-model="cntrl.filters.phone" placeholder="Use format: 123-456-7890">
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_loan_type">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="loanType"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Loan Type</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <label class="county-filter-box">
+                                               <input name="loantype" type="radio" value="Fixed" ng-model="cntrl.filters.loanType"> Fixed
+                                           </label>
+                                           <label class="county-filter-box">
+                                               <input name="loantype" type="radio" value="Adjustable" ng-model="cntrl.filters.loanType"> Adjustable
+                                           </label>
+                                           <label class="county-filter-box">
+                                               <input name="loantype" type="radio" value="Both" ng-model="cntrl.filters.loanType"> Both
+                                           </label>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_mtg_amount">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="mtgAmount"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Mortage Amount</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                        <!--   <div range-slider showValues="true" filter="currency:'$'" step="500" min="0" max="2500000" model-min="cntrl.filters.mtgAmount.min" model-max="cntrl.filters.mtgAmount.max"></div> -->
+                                           <div class="row">
+                                               <div class="pull-left">
+                                                   <input type="text" ng-model="cntrl.filters.mtgAmount.min">
+                                               </div>
+
+                                               <div class="pull-right">
+                                                   <input type="text" ng-model="cntrl.filters.mtgAmount.max">
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_closing_date">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="closingDate"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Closing Date</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                           <div class="row">
+                                               <div class="col-sm-6">
+                                                   <label>From</label>
+                                                   <datepicker date-format="M/d/yyyy" date-typer="true">
+                                                       <input class="form-control" ng-model="cntrl.filters.closingDate.start" placeholder="9/4/1975" type="text"/>
+                                                   </datepicker>
+                                               </div>
+                                               <div class="col-sm-6">
+                                                   <label>To</label>
+                                                   <datepicker date-format="M/d/yyyy" date-typer="true">
+                                                       <input class="form-control" ng-model="cntrl.filters.closingDate.end" placeholder="9/4/1975" type="text"/>
+                                                   </datepicker>
+                                               </div>
+                                           </div>
+
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_previous_value">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="prevValue"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Previous Value</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                         <!--  <div range-slider showValues="true" filter="currency:'$'" step="500" min="0" max="2500000" model-min="cntrl.filters.prevValue.min" model-max="cntrl.filters.prevValue.max"></div> -->
+                                           <div class="row">
+                                               <div class="pull-left">
+                                                   <input type="text" ng-model="cntrl.filters.prevValue.min">
+                                               </div>
+
+                                               <div class="pull-right">
+                                                   <input type="text" ng-model="cntrl.filters.prevValue.max">
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_zestimate">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="zestimate"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Zestimate</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                       <!--    <div range-slider showValues="true" filter="currency:'$'" step="500" min="0" max="2500000" model-min="cntrl.filters.zestimate.min" model-max="cntrl.filters.zestimate.max"></div> -->
+                                           <div class="row">
+                                               <div class="pull-left">
+                                                   <input type="text" ng-model="cntrl.filters.zestimate.min">
+                                               </div>
+
+                                               <div class="pull-right">
+                                                   <input type="text" ng-model="cntrl.filters.zestimate.max">
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_equity">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="equity"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Equity Amount</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                        <!--   <div range-slider showValues="true" filter="currency:'$'" step="500" min="0" max="1000000" model-min="cntrl.filters.equity.min" model-max="cntrl.filters.equity.max"></div> -->
+                                           <div class="row">
+                                               <div class="pull-left">
+                                                   <input type="text" ng-model="cntrl.filters.equity.min">
+                                               </div>
+
+                                               <div class="pull-right">
+                                                   <input type="text" ng-model="cntrl.filters.equity.max">
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="panel filter-panel" id="filter_equity_percent">
+                               <div class="panel-body">
+                                   <div class="row">
+                                       <div class="col-sm-3 col-md-2">
+                                           <button class="btn btn-xs btn-danger filter-panel-close" data-target="equityPercent"><i class="fa fa-close"></i></button>
+                                           <strong class="text-uppercase">Equity Percent</strong>
+                                       </div>
+                                       <div class="col-sm-9 col-md-8">
+                                        <!--   <div range-slider showValues="true" filter="number" step="1" min="0" max="1000" model-min="cntrl.filters.equityPercent.min" model-max="cntrl.filters.equityPercent.max"></div> -->
+                                           <div class="row">
+                                               <div class="pull-left">
+                                                   <input type="text" ng-model="cntrl.filters.equityPercent.min">
+                                               </div>
+
+                                               <div class="pull-right">
+                                                   <input type="text" ng-model="cntrl.filters.equityPercent.max">
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+
+                           <div class="btn-group">
+                               <button class="btn btn-info" ng-click="showFilters = false">
+                                   Close Filters
+                               </button>
+                               <button class="btn btn-warning" ng-click="cntrl.clearFilters()">
+                                   Clear Filters
+                               </button>
+                               <button class="btn btn-primary" ng-click="cntrl.saveFilter()">
+                                   Save Filter
+                               </button>
+                               <button class="btn btn-success" ng-click="cntrl.refreshLeads()">
+                                   Fetch Leads <i class="fa fa-arrow-circle-right"></i>
+                               </button>
+                           </div>
+                            <div ng-show="cntrl.userFilters.length">
+                                <h4>Saved Filters</h4>
+                                <div class="row">
+                                    <div class="col-sm-8 col-md-6 col-lg-4">
+                                        <div class="panel">
+                                            <table class="table table-responsive table-bordered table-hover">
+                                                <tr ng-repeat="ufilt in cntrl.userFilters">
+                                                    <td>{{ufilt.name}}</td>
+                                                    <td>
+                                                        <button class="btn btn-xs btn-danger" ng-click="cntrl.removeSavedFilter(ufilt, $index)">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button class="btn btn-xs btn-info" ng-click="cntrl.loadSavedFilter(ufilt)">
+                                                            <i class="fa fa-arrow-circle-right"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                   </div>
+               </div>
+
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-lg-12">
+               <div class="leads-menu-box pull-left">
+                   <button class="btn btn-info" ng-click="(showFilters == true)?showFilters = false:showFilters = true">Filters <i class="fa fa-arrow-circle-up"></i></button>
+               </div>
+               <div class="leads-menu-box pull-left">
+                   <span class="text-primary" id="total-results-txt">Total Results: {{(cntrl.meta.total || 0) | number }}</span>
+               </div>
+               <div class="leads-menu-box pull-left">
+                   <span ng-show="cntrl.leads.length">
+                       <button ng-class="{'disabled':cntrl.meta.page == 1}" class="btn btn-primary" ng-click="cntrl.pageStart()"><i class="fa fa-fast-backward"></i></button>
+                       <button ng-class="{'disabled':cntrl.meta.page == 1}" class="btn btn-primary" ng-click="cntrl.pagePrev()"><i class="fa fa-backward"></i></button>
+
+                       <button disabled class="btn btn-warning">
+                           {{cntrl.meta.page | number}} / {{cntrl.meta.totalPages | number:0}}
+                       </button>
+
+                       <button ng-class="{'disabled':cntrl.meta.page == cntrl.meta.totalPages}" class="btn btn-primary" ng-click="cntrl.pageNext()"><i class="fa fa-forward"></i></button>
+                       <button ng-class="{'disabled':cntrl.meta.page == cntrl.meta.totalPages}" class="btn btn-primary" ng-click="cntrl.pageEnd()"><i class="fa fa-fast-forward"></i></button>
+                   </span>
+               </div>
+               <div ng-show="cntrl.leads.length" class="leads-menu-box pull-left">
+                   <form class="form-inline" ng-submit="cntrl.gotoPage()">
+                       <input type="text" class="form-control" ng-model="cntrl.selectedPage">
+                       <button type="submit" class="btn btn-info">Go To Page</button>
+                   </form>
+               </div>
+           </div>
+
+       </div>
+       <br />
+       <div class="panel">
+           <table class="table table-bordered table-condensed table-responsive small-txt-table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>
+                        <button class="sort-btn" data-sort="isFirstTime">Type</button>
+                    </th>
+                    <th class="active">
+                        <button class="sort-btn" data-sort="owner.primary.name.last">
+                            Owner
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="address.street1">
+                            Address
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="address.city">
+                            City
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="address.state">
+                            State
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="address.county">
+                            County
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="address.zip">
+                            Zip
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="mortgage.amount">
+                            Mtg
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="mortgage.rateType">
+                            F/A
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="mortgage.date">
+                            Closed
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="mortgage.previousValue">
+                            Prev
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="mortgageValue.value">
+                            Estimate
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="currentEquity">
+                            Equity
+                        </button>
+                    </th>
+                    <th>
+                        <button class="sort-btn" data-sort="currentEquityPercent">
+                            %
+                        </button>
+                    </th>
+                    <th>
+                        <i class="fa fa-ban"></i>
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>Pipl</th>
+                    <th>
+                        Last Comment
+                    </th>
+                    <th>
+                        <button disabled class="btn btn-xs btn-info"><i class="fa fa-eye"></i></button>
+                    </th>
+                </tr>
+                </thead>
+               <tbody>
+                <tr ng-repeat="lead in cntrl.leads" ng-class="bestColor(lead)">
+                    <td>
+                        <small ng-show="lead.isFirstTime" class="label label-success">1st Time</small>
+                        <small ng-show="!lead.isFirstTime" class="label label-info">HECM/HECM</small>
+                    </td>
+                    <td>
+                        {{lead.owner.primary.name.last}}, {{lead.owner.primary.name.first}}
+                    </td>
+                    <td>
+                        {{lead.address.street1}}
+                    </td>
+                    <td>
+                        {{lead.address.city}}
+                    </td>
+                    <td>
+                        {{lead.address.state}}
+                    </td>
+                    <td>
+                        {{lead.address.county}}
+                    </td>
+                    <td>
+                        {{lead.address.zip}}
+                    </td>
+                    <td class="text-right">
+                        {{lead.mortgage.amount | number:0}}
+                    </td>
+                    <td class="text-center">
+                        <span class="label label-primary" ng-if="lead.mortgage.rateType == 'Fixed'">F</span>
+                        <span class="label label-info" ng-if="lead.mortgage.rateType == 'Adjustable'">A</span>
+                    </td>
+                    <td>
+                        {{lead.mortgage.date | formatDate}}
+                    </td>
+                    <td class="text-right">
+                        {{lead.mortgage.previousValue | number:0}}
+                    </td>
+                    <td class="text-right">
+                        {{lead.mortgageValue.value | number:0}}
+                    </td>
+                    <td class="text-right">
+                        {{lead.currentEquity | number:0}}
+                    </td>
+                    <td class="text-right">
+                        {{lead.currentEquityPercent | number:0}}
+                    </td>
+                    <td>
+                        <span class="text-danger" ng-show="lead.canCall == 'No'">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        <span class="text-danger" ng-show="lead.canMail == 'No'">
+                            <i class="fa fa-envelope"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <a ng-click="cntrl.showDialModal(lead)" style="cursor: pointer" ng-repeat="phone in lead.phones | filter:preferWhitePages | orderBy:['-status','-updated', '-createdAt']| limitTo:1">
+                                {{phone.number}}
+                            </a>
+                    <td>
+
+                        <a class="btn btn-xs btn-warning" ng-href="{{lead | piplLink}}" target="_blank"><i class="fa fa-upload"></i></a>
+                    </td>
+                    </td>
+                    <td>
+                        <div style="max-width: 150px;overflow:hidden" ng-repeat="comment in lead.comments | filter:usersComments() |orderBy:'-date' | limitTo:1">
+                                {{comment.body}}
+                        </div>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(lead)"><i class="fa fa-eye"></i></button>
+                    </td>
+                </tr>
+               </tbody>
+           </table>
+           <div class="panel-body" ng-hide="cntrl.leads.length">
+               <div class="alert alert-info">
+                   There are no results for the current filters.   Select filters and fetch leads.
+               </div>
+           </div>
+       </div>
+   </div>

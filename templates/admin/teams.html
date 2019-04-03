@@ -1,0 +1,72 @@
+<?php require (DOCROOT.'templates/partials/top.php');?>
+
+   <div class="container-fluid">
+       <h1 class="page-title">Admin Teams</h1>
+       <div class="row">
+            <div class="col-sm-6">
+                <div class="panel">
+                    <div class="panel-body">
+                        <h3 class="paper-title">All Teams <button class="btn btn-primary btn-sm" ng-click="cntrl.editingTeam = {}"><i class="fa fa-plus"></i></button></h3>
+                        <br />
+                        <table class="table table-bordered table-condensed table-responsive table-striped">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-center">
+                                    <button class="btn btn-xs btn-info" disabled><i class="fa fa-eye"></i></button>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="team in cntrl.teams">
+                                <td>
+                                    {{team.name}}
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-info btn-xs" ng-click="cntrl.editTeam(team, $index)"><i class="fa fa-eye"></i></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+           <div class="col-sm-6" ng-show="cntrl.editingTeam">
+               <div class="panel">
+                   <div class="panel-body">
+                       <h3 class="paper-title">
+                           <span ng-show="cntrl.editingTeam._id">
+                               Edit {{cntrl.editingTeam.name}}
+                           </span>
+                           <span ng-show="!cntrl.editingTeam._id">
+                               Create New Team
+                           </span>
+                       </h3>
+                       <br />
+                       <form ng-submit="cntrl.saveTeam()">
+                           <div class="form-group">
+                               <label>Name</label>
+                               <input type="text" class="form-control" ng-model="cntrl.editingTeam.name">
+                           </div>
+                           <div class="form-group">
+                               <label>Manager</label>
+                               <select class="form-control" ng-model="cntrl.editingTeam.manager._id" ng-options="user._id as user.name.last+', '+user.name.first for user in cntrl.users"></select>
+                           </div>
+                           <div class="form-group">
+                               <div ng-repeat="user in cntrl.users">
+                                   <label>
+                                       <input type="checkbox" checklist-model="cntrl.editingTeam.members" checklist-value="user">
+                                       &nbsp;{{user.name.last}}, {{user.name.first}}
+                                   </label>
+                               </div>
+                           </div>
+                           <button class="btn btn-warning" type="button" ng-click="cntrl.editingTeam = null">Cancel</button>
+                           <button class="btn btn-success" type="submit">Save</button>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+
+<?php require (DOCROOT.'templates/partials/bottom.php');?>

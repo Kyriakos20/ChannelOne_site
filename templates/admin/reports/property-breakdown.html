@@ -1,0 +1,31 @@
+<?php require (DOCROOT.'templates/partials/top.php');?>
+
+<div class="container-fluid">
+    <h1 class="page-title">Reports : Property Breakdown</h1>
+    <div class="row">
+        <div class="col-lg-12" ng-repeat="state in cntrl.states">
+            <div class="panel panel-warning">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{state.state}} <span class="label label-warning">{{state.totalState | number}}</span></h3>
+                </div>
+                <table class="table table-bordered table-condensed table-responsive small-txt-table table-hover">
+                    <thead>
+                    <tr>
+                        <th>YEAR</th><th>COUNT</th><th>HAS VALUE</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="year in state.years">
+                        <td>{{year.year}}</td>
+                        <td>{{year.totalYear | number}}</td>
+                        <td>{{year.hasValueYear | number}} ({{((year.hasValueYear/year.totalYear) * 100) | number:1}}%)</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php require (DOCROOT.'templates/partials/bottom.php');?>

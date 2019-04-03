@@ -1,0 +1,150 @@
+<div class="container-fluid">
+        <h1 class="page-title">Search</h1>
+        <div class="well well-sm">
+            <form ng-submit="cntrl.search()">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group"><label>Last Name</label>
+                        <input type="text" class="form-control" ng-model="cntrl.filter.last" placeholder="last name"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group"><label>First Name</label>
+                        <input type="text" class="form-control" ng-model="cntrl.filter.first" placeholder="first name"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group"><label>Street Address</label>
+                        <input type="text" class="form-control" ng-model="cntrl.filter.street" placeholder="street"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group"><label>State</label>
+                        <input type="text" class="form-control" ng-model="cntrl.filter.state" placeholder="state abbreviation ex. DE"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group"><label>Phone</label>
+                        <input type="text" class="form-control" ng-model="cntrl.filter.phone" placeholder="Phone (10 digits)"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group"><label>Unique Lead ID</label>
+                        <input type="text" class="form-control" ng-model="cntrl.filter.oldId" placeholder="lead id"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="text-center">
+                            <button class="btn btn-sm btn-warning" type="button" ng-click="cntrl.filter = {}">Clear</button>
+                            <button class="btn btn-primary btn-sm">Search <i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row" ng-show="cntrl.leads.length">
+            <div class="col-sm-6">
+                <h3 class="text-primary">{{cntrl.leads.length}} Result<span ng-show="cntrl.leads.length>1">s</span></h3>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="searchFilter" placeholder="Filter Results">
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body" ng-show="!cntrl.leads.length">
+                <div class="alert alert-info">No Results. Choose search criteria to begin.</div>
+            </div>
+            <table ng-show="cntrl.leads.length" class="table table-condensed table-responsive table-condensed table-bordered small-txt-table">
+                <thead>
+                <tr>
+                    <th ng-class="{'active':cntrl.sortField == 'owner.primary.name.last'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('owner.primary.name.last')">Last</button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField == 'owner.primary.name.first'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('owner.primary.name.first')">First</button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField == 'address.street1'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('address.street1')">Street</button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField == 'address.city'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('address.city')">City</button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField == 'address.county'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('address.county')">County</button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField == 'address.state'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('address.state')">State</button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField =='address.zip'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('address.zip')">Zip</button>
+                    </th>
+                    <th>
+                        Phone
+                    </th>
+                    <th>
+                        <i class="fa fa-ban"></i>
+                    </th>
+                    <th>
+                        <button class="sort-btn" ng-click="cntrl.sortOn('status')">
+                            Status
+                        </button>
+                    </th>
+                    <th ng-class="{'active':cntrl.sortField =='pipelineOwner.name.last'}">
+                        <button class="sort-btn" ng-click="cntrl.sortOn('pipelineOwner.name.last')">
+                            <i class="fa fa-user"></i>
+                        </button>
+                    </th>
+                    <th>
+                        <button disabled class="btn btn-xs btn-info"><i class="fa fa-eye"></i></button>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="lead in cntrl.leads | orderBy:cntrl.sortDir+cntrl.sortField | filter:searchFilter">
+                        <td>
+                            {{lead.owner.primary.name.last}}
+                        </td>
+                        <td>
+                            {{lead.owner.primary.name.first}}<span ng-if="lead.owner.primary.name.middle"> {{lead.owner.primary.name.middle}}</span>
+                        </td>
+                        <td>
+                            {{lead.address.street1}}<span ng-if="lead.address.steet2">, {{lead.address.street1}}</span>
+                        </td>
+                        <td>
+                            {{lead.address.city}}
+                        </td>
+                        <td>
+                            {{lead.address.county}}
+                        </td>
+                        <td>
+                            {{lead.address.state}}
+                        </td>
+                        <td>
+                            {{lead.address.zip}}
+                        </td>
+                        <td>
+                            <a ng-click="cntrl.showDialModal(lead)" ng-repeat="phone in lead.phones | filter:preferWhitePages | orderBy:['-status','-updated', '-createdAt']| limitTo:1">
+                                {{phone.number}}
+                            </a>
+                        </td>
+                            <td>
+                            <span class="text-danger" ng-show="lead.canCall == 'No'">
+                                <i class="fa fa-phone"></i>
+                            </span>
+                            <span class="text-danger" ng-show="lead.canMail == 'No'">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </td>
+                        <td>
+                            {{lead.status}}
+                        </td>
+                        <td>
+                            <span ng-show="lead.pipelineOwner">{{lead.pipelineOwner.name.last}}, {{lead.pipelineOwner.name.first}}</span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-xs btn-info btn-info" ng-click="cntrl.showDetail(lead)"><i class="fa fa-eye"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+</div>
